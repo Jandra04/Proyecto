@@ -1,5 +1,3 @@
-// Acumulador de la calificacion de UNA cancion: promedio global de todos los votos.
-// Una sola instancia por cancion (vive en Cancion).
 public class Calificacion {
     private double suma;
     private int cantidad;
@@ -9,10 +7,9 @@ public class Calificacion {
         cantidad = 0;
     }
 
-    // true si se guardo; false si no era valido (fuera de rango o mas de un decimal)
     public boolean agregar(double v) {
         double redondeado = Math.round(v * 10) / 10.0;
-        if (v < 0 || v > 5 || redondeado != v) {
+        if (Double.isNaN(v) || v < 0 || v > 5 || Math.abs(redondeado - v) > 1e-9) {
             System.out.println("Valor no válido: debe estar entre 0.0 y 5.0 con un máximo de un decimal.");
             return false;
         }

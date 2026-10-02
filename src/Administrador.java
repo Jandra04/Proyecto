@@ -1,10 +1,8 @@
-import java.util.ArrayList;
-
 public class Administrador {
     private String correoElectronico;
     private String nombreUsuario;
     private String contrasenia;
-    private ArrayList<Cancion> colaReproduccion = new ArrayList<>();
+    private ColaReproduccion colaReproduccion = new ColaReproduccion();
 
     public Administrador(String correoElectronico, String nombreUsuario, String contrasenia) {
         this.correoElectronico = correoElectronico;
@@ -104,17 +102,17 @@ public class Administrador {
 
     // public void agregarACola(Cancion c) {
     //     if (c != null) {
-    //         colaReproduccion.addLast(c);
+    //         colaReproduccion.agregarCancion(c);
     //     }
     // }
 
     // public void reproducirCola() {
-    //     if (colaReproduccion.isEmpty()) {
+    //     if (colaReproduccion.getCanciones().isEmpty()) {
     //         System.out.println("La cola de reproducción está vacía.");
     //         return;
     //     }
-    //     for (int i = 0; i < colaReproduccion.size(); i++) {
-    //         reproducirCancion(colaReproduccion.get(i));
+    //     for (int i = 0; i < colaReproduccion.getCanciones().size(); i++) {
+    //         reproducirCancion(colaReproduccion.getCanciones().get(i));
     //     }
     // }
 
@@ -134,4 +132,12 @@ public class Administrador {
     // public ArrayList<ListaReproduccion> buscarListaPorNombre(Aplicacion app, String nombre) {
     //     return app.buscarListaPorNombre(nombre);
     // }
+
+    @Override
+    public String toString() {
+        return "Administrador"
+                + "\nUsuario: " + nombreUsuario
+                + "\nCorreo: " + correoElectronico
+                + "\nCanciones en cola: " + colaReproduccion.getCanciones().size();
+    }
 }

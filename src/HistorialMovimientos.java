@@ -14,14 +14,17 @@ public class HistorialMovimientos {
     }
 
     public void registrarRecarga(double monto) {
+        if (monto <= 0) {
+            System.out.println("El monto debe ser positivo.");
+            return;
+        }
         recargas.addLast(new Recarga(monto));
         saldo += monto;
     }
 
-    // TODO: quita monto luego
-    public void registrarCompra(String nombreUsuario, Cancion cancion, double monto) {
-        compras.addLast(new Compra(nombreUsuario, cancion, monto));
-        saldo -= monto;
+    public void registrarCompra(String nombreUsuario, Cancion cancion) {
+        compras.addLast(new Compra(nombreUsuario, cancion));
+        saldo -= cancion.getPrecio();
     }
 
     public double getSaldo() {
@@ -58,5 +61,13 @@ public class HistorialMovimientos {
             System.out.println(compras.get(i));
         }
         System.out.println("Saldo actual: $" + saldo);
+    }
+
+    @Override
+    public String toString() {
+        return "HistorialMovimientos"
+                + "\nRecargas: " + recargas.size()
+                + "\nCompras: " + compras.size()
+                + "\nSaldo: $" + saldo;
     }
 }

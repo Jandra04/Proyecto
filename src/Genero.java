@@ -7,7 +7,7 @@ public class Genero {
     }
 
     public String getNombre(){
-        return nombre = nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre){

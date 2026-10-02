@@ -14,7 +14,7 @@ public class Usuario {
     private Coleccion coleccionUsuario; // referencias a canciones compradas del catálogo
     private HistorialMovimientos historial; // saldo = historial.getSaldo()
     private ArrayList<ListaReproduccion> listasReproduccion; // listas del usuario
-    private ArrayList<Integer> colaReproduccion; // índices de la coleccion en cola
+    private ColaReproduccion colaReproduccion; // cola de reproducción del usuario
 
     public Usuario(String nombreCompleto, LocalDate fechaNacimiento, String nacionalidad, String cedula, String avatar,
                    String correoElectronico, String nombreUsuario, String contrasenia) {
@@ -29,7 +29,7 @@ public class Usuario {
         this.coleccionUsuario = new Coleccion();
         this.historial = new HistorialMovimientos();
         this.listasReproduccion = new ArrayList<>();
-        this.colaReproduccion = new ArrayList<>();
+        this.colaReproduccion = new ColaReproduccion();
     }
 
     public void mostrarListas() {
@@ -54,9 +54,7 @@ public class Usuario {
             System.out.println("Solo puedes calificar canciones que hayas comprado.");
             return false;
         }
-        // TODO: descomentar cuando Cancion.calificar esté implementada
-        // c.calificar(valor);
-        return true;
+        return c.calificar(valor);
     }
 
     public void reproducirLista(ListaReproduccion l) {
@@ -65,16 +63,16 @@ public class Usuario {
             System.out.println("La lista no existe.");
             return;
         }
-        System.out.println(getNombreUsuario() + " reproduce la lista " + l); // todo: se hará así?
+        System.out.println(getNombreUsuario() + " reproduce la lista " + l);
     }
 
     public void reproducirCola() {
-        if (colaReproduccion.isEmpty()) {
+        if (colaReproduccion.getCanciones().isEmpty()) {
             System.out.println("La cola de reproducción está vacía.");
             return;
         }
-        for (int i = 0; i < colaReproduccion.size(); i++) {
-            Cancion c = coleccionUsuario.getCancion(colaReproduccion.get(i));
+        for (int i = 0; i < colaReproduccion.getCanciones().size(); i++) {
+            Cancion c = colaReproduccion.getCanciones().get(i);
             if (c != null) {
                 reproducirCancion(c);
             }
@@ -177,15 +175,18 @@ public class Usuario {
         this.listasReproduccion = listasReproduccion;
     }
 
-    public ArrayList<Integer> getColaReproduccion() {
+    public ColaReproduccion getColaReproduccion() {
         return colaReproduccion;
     }
 
-    public void setColaReproduccion(ArrayList<Integer> colaReproduccion) {
+    public void setColaReproduccion(ColaReproduccion colaReproduccion) {
         this.colaReproduccion = colaReproduccion;
     }
 
     public boolean esMayorDeEdad() {
+        if (getFechaNacimiento() == null) {
+            return false;
+        }
         return 18 <= ChronoUnit.YEARS.between(getFechaNacimiento(), LocalDate.now());
     }
 
@@ -221,16 +222,14 @@ public class Usuario {
     }
 
     public void agregarACola(Cancion c) {
-        int indice = coleccionUsuario.indiceDe(c);
-        if (indice == -1) {
+        if (c == null || !tieneCancion(c)) {
             System.out.println("La canción no está en tu colección. Cómprala primero.");
             return;
         }
-        colaReproduccion.addLast(indice);
+        colaReproduccion.agregarCancion(c);
     }
 
-    // todo: ajustar a Canción (quitar precio, es solo para probar)
-    public boolean comprarCancion(Cancion c, double precio) {
+    public boolean comprarCancion(Cancion c) {
         if (c == null) {
             return false;
         }
@@ -238,22 +237,22 @@ public class Usuario {
             System.out.println("Ya tienes esa canción en tu colección.");
             return false;
         }
+        double precio = c.getPrecio();
         if (getSaldo() < precio) {
             System.out.println("Saldo insuficiente. Tiene $" + getSaldo() + ", cuesta $" + precio);
             return false;
         }
-        historial.registrarCompra(nombreUsuario, c, precio);
+        historial.registrarCompra(nombreUsuario, c);
         coleccionUsuario.agregarCancion(c);
         System.out.println(nombreUsuario + " ha comprado " + c + " exitosamente. Saldo restante: $" + getSaldo());
         return true;
     }
 
     public ListaReproduccion crearLista(String nombre) {
-        // TODO: descomentar cuando ListaReproduccion tenga constructor(nombre)
-        // ListaReproduccion l = new ListaReproduccion(nombre);
-        // listasReproduccion.addLast(l);
+        ListaReproduccion l = new ListaReproduccion(nombre, LocalDate.now());
+        listasReproduccion.addLast(l);
         System.out.println("Lista \"" + nombre + "\" creada.");
-        return null;
+        return l;
     }
 
     public boolean agregarCancionALista(ListaReproduccion l, Cancion c) {
@@ -264,8 +263,7 @@ public class Usuario {
             System.out.println("Solo puedes agregar a una lista canciones que hayas comprado.");
             return false;
         }
-        // TODO: descomentar cuando ListaReproduccion.agregarCancion esté implementada
-        // l.agregarCancion(c);
+        l.agregarCancion(c);
         return true;
     }
 
@@ -287,11 +285,10 @@ public class Usuario {
             return resultado;
         }
         for (int i = 0; i < listasReproduccion.size(); i++) {
-            // TODO: descomentar cuando ListaReproduccion.getNombre esté implementada
-            // ListaReproduccion l = listasReproduccion.get(i);
-            // if (l.getNombre() != null && l.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
-            //     resultado.addLast(l);
-            // }
+            ListaReproduccion l = listasReproduccion.get(i);
+            if (l.getNombre() != null && l.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
+                resultado.addLast(l);
+            }
         }
         return resultado;
     }
@@ -309,7 +306,6 @@ public class Usuario {
         return c != null && coleccionUsuario.indiceDe(c) != -1;
     }
 
-    // todo: revisar si así es como lo quiere el profe
     public void reproducirCancion(Cancion c) {
         if (c == null) {
             System.out.println("La canción no existe.");
@@ -320,5 +316,20 @@ public class Usuario {
         } else {
             System.out.println("Reproduciendo 30 segundos de prueba: " + c);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario"
+                + "\nNombre completo: " + nombreCompleto
+                + "\nUsuario: " + nombreUsuario
+                + "\nCorreo: " + correoElectronico
+                + "\nNacionalidad: " + nacionalidad
+                + "\nCédula: " + cedula
+                + "\nFecha de nacimiento: " + fechaNacimiento
+                + "\nAvatar: " + avatar
+                + "\nSaldo: $" + getSaldo()
+                + "\nListas de reproducción: " + listasReproduccion.size()
+                + "\nCanciones compradas: " + coleccionUsuario.getCantidad();
     }
 }

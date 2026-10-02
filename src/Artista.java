@@ -14,6 +14,19 @@ public class Artista {
         this.nombre = nombre;
     }
 
+    // Identidad de negocio: mismo nombre (sin distinguir mayusculas).
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Artista)) {
+            return false;
+        }
+        Artista otra = (Artista) o;
+        return nombre.equalsIgnoreCase(otra.nombre);
+    }
+
     @Override
     public String toString(){
         return "Artista" +

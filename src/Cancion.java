@@ -4,26 +4,26 @@ public class Cancion {
 
     private String nombre;
     private LocalDate fechaLanzamiento;
-    private double calificacion;
+    private Calificacion calificacion;
     private double precio;
     private Genero genero;
     private Artista artista;
     private Compositor compositor;
     private Album album;
 
-    public Cancion(String nombre,  LocalDate fechaLanzamiento,
-                   double calificacion, double precio,
+    public Cancion(String nombre, LocalDate fechaLanzamiento,
+                   double precio,
                    Genero genero, Artista artista,
-                   Compositor compositor,  Album album){
+                   Compositor compositor, Album album){
 
-    this.nombre = nombre;
-    this.fechaLanzamiento = fechaLanzamiento;
-    this.calificacion = calificacion;
-    this.precio = precio;
-    this.genero = genero;
-    this.artista = artista;
-    this.compositor = compositor;
-    this.album = album;
+        this.nombre = nombre;
+        this.fechaLanzamiento = fechaLanzamiento;
+        this.calificacion = new Calificacion();
+        this.precio = precio;
+        this.genero = genero;
+        this.artista = artista;
+        this.compositor = compositor;
+        this.album = album;
     }
 
     public String getNombre(){
@@ -42,12 +42,12 @@ public class Cancion {
         this.fechaLanzamiento = fechaLanzamiento;
     }
 
-    public double getCalificacion(){
+    public Calificacion getCalificacion(){
         return calificacion;
     }
 
-    public void setCalificacion(double calificacion){
-        this.calificacion = calificacion;
+    public boolean calificar(double valor){
+        return calificacion.agregar(valor);
     }
 
     public double getPrecio(){
@@ -90,6 +90,19 @@ public class Cancion {
         this.album = album;
     }
 
+    // Identidad de negocio: mismo nombre y mismo artista.
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Cancion)) {
+            return false;
+        }
+        Cancion otra = (Cancion) o;
+        return nombre.equalsIgnoreCase(otra.nombre) && artista.equals(otra.artista);
+    }
+
     @Override
     public String toString(){
         return "Cancion"
@@ -100,6 +113,6 @@ public class Cancion {
                 "\nGenero: " + genero.getNombre() +
                 "\nArtista: " + artista.getNombre() +
                 "\nCompositor: " + compositor.getNombre() +
-                "\nAlbum: " + (album != null ? album.getNombre() : "Sencillo");
+                "\nAlbum: " + album.getNombre();
     }
-    }
+}
