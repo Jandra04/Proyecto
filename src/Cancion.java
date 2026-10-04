@@ -2,7 +2,7 @@ import java.time.LocalDate;
 
 public class Cancion {
 
-    private String nombre;
+    private String Nombre;
     private LocalDate fechaLanzamiento;
     private double calificacion;
     private double precio;
@@ -10,13 +10,14 @@ public class Cancion {
     private Artista artista;
     private Compositor compositor;
     private Album album;
+    private Calificacion registroCalificaciones;
 
-    public Cancion(String nombre,  LocalDate fechaLanzamiento,
+    public Cancion(String Nombre, LocalDate fechaLanzamiento,
                    double calificacion, double precio,
                    Genero genero, Artista artista,
-                   Compositor compositor,  Album album){
+                   Compositor compositor, Album album){
 
-    this.nombre = nombre;
+    this.Nombre = Nombre;
     this.fechaLanzamiento = fechaLanzamiento;
     this.calificacion = calificacion;
     this.precio = precio;
@@ -24,14 +25,16 @@ public class Cancion {
     this.artista = artista;
     this.compositor = compositor;
     this.album = album;
+    this.registroCalificaciones = new Calificacion();
     }
 
+
     public String getNombre(){
-        return nombre;
+        return Nombre;
     }
 
     public void setNombre(String nombre){
-        this.nombre = nombre;
+        this.Nombre = nombre;
     }
 
     public LocalDate getFechaLanzamiento(){
@@ -89,11 +92,28 @@ public class Cancion {
     public void setAlbum(Album album){
         this.album = album;
     }
+    public Calificacion getRegistroCalificaciones() {
+        return registroCalificaciones;
+    }
+
+    public void setRegistroCalificaciones(Calificacion registroCalificaciones) {
+        this.registroCalificaciones = registroCalificaciones;
+    }
+    public boolean calificar(double valor) {
+
+        boolean agregado = registroCalificaciones.agregar(valor);
+
+        if (agregado) {
+            calificacion = registroCalificaciones.getPromedio();
+        }
+
+        return agregado;
+    }
 
     @Override
     public String toString(){
         return "Cancion"
-                + "\nNombre: " + nombre +
+                + "\nNombre: " + Nombre +
                 "\nFecha de lanzamiento: " + fechaLanzamiento +
                 "\nCalificacion: " + calificacion +
                 "\nPrecio: $ " + precio +

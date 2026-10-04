@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>D:/Ingeneria en Sistemas/2026/C3/objetos/Proyecto/Proyecto/src</OriginalElement>
+  <nodes>
+    <node x="173.86761851223457" y="1927.3581341105928">Usuario</node>
+    <node x="-82.30871718986506" y="1289.9576724815738">HistorialMovimientos</node>
+    <node x="669.9578292829949" y="1719.7581596086986">Administrador</node>
+    <node x="-244.10183012667187" y="699.2903121215332">Artista</node>
+    <node x="612.8504038274666" y="66.3516821335532">Calificacion</node>
+    <node x="867.7195699347108" y="753.1826354268868">Compositor</node>
+    <node x="-50.657336149929904" y="1858.9244161747285">Main</node>
+    <node x="319.4562401077704" y="1281.6508057607416">ListaReproduccion</node>
+    <node x="45.34701958050201" y="813.7665771666905">Compra</node>
+    <node x="42.64769388730247" y="490.39035598508724">Album</node>
+    <node x="-499.7432393211369" y="1282.4737166073792">Coleccion</node>
+    <node x="-232.9482153699227" y="971.0955909124746">Recarga</node>
+    <node x="901.5160031529798" y="412.77995470708663">Genero</node>
+    <node x="381.89762669719426" y="517.6938857768507">Cancion</node>
+    <node x="709.3031899633677" y="1326.1003557904264">ColaReproduccion</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Main" target="Genero" relationship="CREATE">
+      <point x="-75.0" y="44.5" />
+      <point x="-43.657336149929904" y="3168.858134110593" />
+      <point x="1108.22" y="3168.858134110593" />
+      <point x="1108.22" y="483.27995470708663" />
+      <point x="74.50000000000011" y="0.0" />
+    </edge>
+    <edge source="Main" target="Artista" relationship="CREATE">
+      <point x="-82.0" y="14.99958382527143" />
+      <point x="-517.2432393211369" y="1918.424" />
+      <point x="-517.2432393211369" y="769.7903121215332" />
+      <point x="-74.5" y="0.0" />
+    </edge>
+    <edge source="Usuario" target="Coleccion" relationship="TO_ONE">
+      <point x="-218.0" y="14.999865889407374" />
+      <point x="-547.2432393211369" y="2516.858" />
+      <point x="-547.2432393211369" y="1544.9737166073792" />
+      <point x="-170.0" y="0.0" />
+    </edge>
+    <edge source="Main" target="HistorialMovimientos" relationship="CREATE">
+      <point x="82.0003361499299" y="14.99958382527143" />
+      <point x="144.0" y="1918.424" />
+      <point x="144.0" y="1799.974" />
+      <point x="85.191" y="1799.974" />
+      <point x="-2.8281013493369755E-4" y="166.50032751842627" />
+    </edge>
+    <edge source="Administrador" target="ColaReproduccion" relationship="CREATE">
+      <point x="-180.99982928299494" y="-1.5960869859554805E-4" />
+      <point x="640.0" y="1946.258" />
+      <point x="640.0" y="1432.6" />
+      <point x="-119.00018996336769" y="-3.557904265107936E-4" />
+    </edge>
+    <edge source="Usuario" target="ListaReproduccion" relationship="TO_MANY">
+      <point x="84.08838148776545" y="-574.5" />
+      <point x="14.999759892229633" y="178.5" />
+    </edge>
+    <edge source="Main" target="Recarga" relationship="CREATE">
+      <point x="-81.99966385007009" y="-4.1617472857069515E-4" />
+      <point x="-121.0" y="1903.424" />
+      <point x="-121.0" y="1206.0" />
+      <point x="-167.243" y="1206.0" />
+      <point x="-11.794784630077288" y="94.50040908752544" />
+    </edge>
+    <edge source="Main" target="Album" relationship="CREATE">
+      <point x="-82.0" y="29.99958382527143" />
+      <point x="-532.2432393211369" y="1933.424" />
+      <point x="-532.2432393211369" y="560.8903559850872" />
+      <point x="-74.5" y="0.0" />
+    </edge>
+    <edge source="Usuario" target="ColaReproduccion" relationship="TO_ONE">
+      <point x="218.00038148776548" y="14.999865889407374" />
+      <point x="1078.22" y="2516.858" />
+      <point x="1078.22" y="1556.6" />
+      <point x="673.0" y="1556.6" />
+      <point x="673.0" y="1497.5" />
+      <point x="-119.00018996336769" y="64.89964420957358" />
+    </edge>
+    <edge source="Main" target="Usuario" relationship="CREATE">
+      <point x="82.0" y="31.43371793586425" />
+      <point x="-218.0" y="-567.0" />
+    </edge>
+    <edge source="Usuario" target="HistorialMovimientos" relationship="CREATE">
+      <point x="-217.99961851223458" y="-1.3411059262580238E-4" />
+      <point x="144.0" y="2501.858" />
+      <point x="144.0" y="1799.974" />
+      <point x="85.191" y="1799.974" />
+      <point x="-2.8281013493369755E-4" y="166.50032751842627" />
+    </edge>
+    <edge source="ColaReproduccion" target="Cancion" relationship="TO_MANY">
+      <point x="-1.8996336768850597E-4" y="-106.50035579042651" />
+      <point x="828.303" y="1221.0" />
+      <point x="342.0" y="1221.0" />
+      <point x="342.0" y="792.194" />
+      <point x="-211.99962669719423" y="1.1422314923947852E-4" />
+    </edge>
+    <edge source="HistorialMovimientos" target="Compra" relationship="CREATE">
+      <point x="167.49971718986504" y="3.2751842627476435E-4" />
+      <point x="287.0" y="1456.458" />
+      <point x="287.0" y="1152.596" />
+      <point x="173.347" y="1152.596" />
+      <point x="-1.958050199846184E-5" y="142.50042283330959" />
+    </edge>
+    <edge source="Compra" target="Cancion" relationship="TO_ONE">
+      <point x="127.99998041949797" y="4.2283330958525767E-4" />
+      <point x="342.0" y="956.267" />
+      <point x="342.0" y="792.194" />
+      <point x="-211.99962669719423" y="1.1422314923947852E-4" />
+    </edge>
+    <edge source="HistorialMovimientos" target="Recarga" relationship="TO_MANY">
+      <point x="0.0" y="-166.5" />
+      <point x="85.19128281013494" y="1152.596" />
+      <point x="77.5" y="87.00040908752544" />
+    </edge>
+    <edge source="Cancion" target="Compositor" relationship="TO_ONE">
+      <point x="212.0" y="43.488749650036084" />
+      <point x="-96.5" y="0.0" />
+    </edge>
+    <edge source="Cancion" target="Calificacion" relationship="CREATE">
+      <point x="135.95277713027235" y="-274.5" />
+      <point x="15.0" y="130.5" />
+    </edge>
+    <edge source="Main" target="Coleccion" relationship="CREATE">
+      <point x="3.3614992990749215E-4" y="-44.50041617472857" />
+      <point x="31.343000000000004" y="1834.0" />
+      <point x="-329.743" y="1834.0" />
+      <point x="2.3932113691671475E-4" y="262.50028339262076" />
+    </edge>
+    <edge source="Main" target="ListaReproduccion" relationship="CREATE">
+      <point x="-14.999663850070093" y="-44.50041617472857" />
+      <point x="16.343000000000004" y="1722.0" />
+      <point x="460.956" y="1722.0" />
+      <point x="-2.4010777036664877E-4" y="178.50019423925846" />
+    </edge>
+    <edge source="Usuario" target="Coleccion" relationship="CREATE">
+      <point x="3.8148776542357155E-4" y="-574.5001341105929" />
+      <point x="391.868" y="1834.0" />
+      <point x="-329.743" y="1834.0" />
+      <point x="2.3932113691671475E-4" y="262.50028339262076" />
+    </edge>
+    <edge source="Cancion" target="Album" relationship="TO_ONE">
+      <point x="-212.0" y="-231.30352979176348" />
+      <point x="74.5" y="0.0" />
+    </edge>
+    <edge source="Cancion" target="Genero" relationship="TO_ONE">
+      <point x="212.0" y="-267.0" />
+      <point x="-74.5" y="41.91393106976409" />
+    </edge>
+    <edge source="Cancion" target="Artista" relationship="TO_ONE">
+      <point x="-212.0" y="-22.403573655317473" />
+      <point x="74.5" y="0.0" />
+    </edge>
+    <edge source="Administrador" target="ColaReproduccion" relationship="TO_ONE">
+      <point x="1.7071700506221532E-4" y="-226.5001596086986" />
+      <point x="850.958" y="1556.6" />
+      <point x="673.0" y="1556.6" />
+      <point x="673.0" y="1497.5" />
+      <point x="-119.00018996336769" y="64.89964420957358" />
+    </edge>
+    <edge source="Main" target="Administrador" relationship="CREATE">
+      <point x="-45.0" y="44.5" />
+      <point x="-13.657336149929904" y="3138.858134110593" />
+      <point x="850.9578292829949" y="3138.858134110593" />
+      <point x="0.0" y="226.49999999999977" />
+    </edge>
+    <edge source="Main" target="ColaReproduccion" relationship="CREATE">
+      <point x="82.0003361499299" y="-4.1617472857069515E-4" />
+      <point x="640.0" y="1903.424" />
+      <point x="640.0" y="1432.6" />
+      <point x="-119.00018996336769" y="-3.557904265107936E-4" />
+    </edge>
+    <edge source="Usuario" target="HistorialMovimientos" relationship="TO_ONE">
+      <point x="-210.5" y="-574.5" />
+      <point x="96.17633570209964" y="166.5" />
+    </edge>
+    <edge source="Usuario" target="ColaReproduccion" relationship="CREATE">
+      <point x="218.00038148776548" y="-1.3411059262580238E-4" />
+      <point x="640.0" y="2501.858" />
+      <point x="640.0" y="1432.6" />
+      <point x="-119.00018996336769" y="-3.557904265107936E-4" />
+    </edge>
+    <edge source="Main" target="Cancion" relationship="CREATE">
+      <point x="-60.0" y="44.5" />
+      <point x="-28.657336149929904" y="3153.858134110593" />
+      <point x="1093.22" y="3153.858134110593" />
+      <point x="1093.22" y="935.6826354268868" />
+      <point x="212.0" y="143.48874965003608" />
+    </edge>
+    <edge source="Main" target="Compra" relationship="CREATE">
+      <point x="82.0003361499299" y="-15.00041617472857" />
+      <point x="287.0" y="1888.424" />
+      <point x="287.0" y="1152.596" />
+      <point x="173.347" y="1152.596" />
+      <point x="-1.958050199846184E-5" y="142.50042283330959" />
+    </edge>
+    <edge source="ListaReproduccion" target="Cancion" relationship="TO_MANY">
+      <point x="-2.4010777036664877E-4" y="-178.49980576074154" />
+      <point x="460.956" y="1221.0" />
+      <point x="342.0" y="1221.0" />
+      <point x="342.0" y="792.194" />
+      <point x="-211.99962669719423" y="1.1422314923947852E-4" />
+    </edge>
+    <edge source="Cancion" target="Calificacion" relationship="TO_ONE">
+      <point x="120.95277713027235" y="-274.5" />
+      <point x="0.0" y="130.5" />
+    </edge>
+    <edge source="HistorialMovimientos" target="Compra" relationship="TO_MANY">
+      <point x="15.0" y="-166.5" />
+      <point x="-73.15573677036707" y="142.5" />
+    </edge>
+    <edge source="HistorialMovimientos" target="Recarga" relationship="CREATE">
+      <point x="-167.50028281013493" y="3.2751842627476435E-4" />
+      <point x="-121.0" y="1456.458" />
+      <point x="-121.0" y="1206.0" />
+      <point x="-167.243" y="1206.0" />
+      <point x="-11.794784630077288" y="94.50040908752544" />
+    </edge>
+    <edge source="Main" target="Compositor" relationship="CREATE">
+      <point x="0.0" y="44.5" />
+      <point x="31.342663850070096" y="3183.858134110593" />
+      <point x="1123.22" y="3183.858134110593" />
+      <point x="1123.22" y="835.6826354268868" />
+      <point x="96.5" y="0.0" />
+    </edge>
+    <edge source="Usuario" target="ListaReproduccion" relationship="CREATE">
+      <point x="15.000381487765424" y="-574.5001341105929" />
+      <point x="406.868" y="1722.0" />
+      <point x="460.956" y="1722.0" />
+      <point x="-2.4010777036664877E-4" y="178.50019423925846" />
+    </edge>
+    <edge source="Coleccion" target="Cancion" relationship="TO_MANY">
+      <point x="2.3932113691671475E-4" y="-262.49971660737924" />
+      <point x="-329.743" y="1221.0" />
+      <point x="342.0" y="1221.0" />
+      <point x="342.0" y="792.194" />
+      <point x="-211.99962669719423" y="1.1422314923947852E-4" />
+    </edge>
+  </edges>
+  <RemovedNodes />
+  <RemovedEdges />
+  <settings layout="Hierarchic Compact" zoom="0.8000000000000002" showDependencies="true" x="297.9999999999997" y="544.125" />
+  <SelectedNodes>
+    <node>Recarga</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
