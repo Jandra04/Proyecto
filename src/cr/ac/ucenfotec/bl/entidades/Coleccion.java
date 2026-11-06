@@ -1,224 +1,150 @@
+package cr.ac.ucenfotec.bl.entidades;
+
+import cr.ac.ucenfotec.bl.interfaces.Buscable;
+
 import java.util.ArrayList;
 
-public class Coleccion {
+public class Coleccion implements Buscable {
 
-    private ArrayList<Cancion> coleccion;
-    private ArrayList<ArrayList<Cancion>> cacheTops;
+    // Atributos
+    private ArrayList<Cancion> canciones;
 
+    // Constructor
     public Coleccion() {
-        this.coleccion = new ArrayList<>();
-        this.cacheTops = new ArrayList<>();
+        this.canciones = new ArrayList<>();
     }
 
-    public ArrayList<Cancion> getColeccion() {
-        return coleccion;
+    // Getter
+    public ArrayList<Cancion> getCanciones() {
+        return canciones;
     }
 
-    public void setColeccion(ArrayList<Cancion> coleccion) {
-        this.coleccion = coleccion;
-    }
+    // Agrega una canción a la colección
+    public boolean agregarCancion(Cancion cancion) {
 
-    public ArrayList<ArrayList<Cancion>> getCacheTops() {
-        return cacheTops;
-    }
-
-    public void setCacheTops(ArrayList<ArrayList<Cancion>> cacheTops) {
-        this.cacheTops = cacheTops;
-    }
-
-    public void agregarCancion(Cancion c) {
-        coleccion.add(c);
-
-        System.out.println(
-                "Se ha añadido la canción "
-                        + c.getNombre()
-                        + " a la colección del usuario."
-        );
-    }
-
-    public int indiceDe(Cancion c) {
-
-        for (int i = 0; i < coleccion.size(); i++) {
-
-            if (coleccion.get(i) == c) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public Cancion getCancion(int i) {
-
-        if (i < 0 || i >= coleccion.size()) {
-            System.out.println("Índice inválido: " + i);
-            return null;
-        }
-
-        return coleccion.get(i);
-    }
-
-    public void calificar(int i, double valor) {
-
-        Cancion c = getCancion(i);
-
-        if (c == null) {
-            return;
-        }
-
-        // Se activará cuando Cancion tenga el método calificar
-        // c.calificar(valor);
-    }
-
-    private boolean coincide(String valor, String busqueda) {
-
-        if (busqueda == null || valor == null) {
+        if (cancion == null || contieneCancion(cancion)) {
             return false;
         }
 
-        return valor.toLowerCase()
-                .contains(busqueda.toLowerCase());
+        canciones.add(cancion);
+
+        return true;
     }
 
+    // Verifica si una canción está en la colección
+    public boolean contieneCancion(Cancion cancion) {
+        return canciones.contains(cancion);
+    }
+
+    // Busca la posición de una canción
+    public int indiceDe(Cancion cancion) {
+        return canciones.indexOf(cancion);
+    }
+
+    // Obtiene una canción según su posición
+    public Cancion getCancion(int indice) {
+
+        if (indice < 0 || indice >= canciones.size()) {
+            return null;
+        }
+
+        return canciones.get(indice);
+    }
+
+    // Busca canciones por nombre
+    @Override
     public ArrayList<Cancion> buscarPorNombre(String nombre) {
 
-        ArrayList<Cancion> resultado = new ArrayList<>();
+        ArrayList<Cancion> resultados = new ArrayList<>();
 
-        for (int i = 0; i < coleccion.size(); i++) {
+        if (nombre == null) {
+            return resultados;
+        }
 
-            if (coincide(
-                    coleccion.get(i).getNombre(),
-                    nombre)) {
+        for (Cancion cancion : canciones) {
 
-                resultado.add(coleccion.get(i));
+            if (cancion.getNombre()
+                    .toLowerCase()
+                    .contains(nombre.toLowerCase())) {
+
+                resultados.add(cancion);
             }
         }
 
-        return resultado;
+        return resultados;
     }
 
+    // Busca canciones por género
+    @Override
     public ArrayList<Cancion> buscarPorGenero(String genero) {
 
-        ArrayList<Cancion> resultado = new ArrayList<>();
+        ArrayList<Cancion> resultados = new ArrayList<>();
 
-        for (int i = 0; i < coleccion.size(); i++) {
+        if (genero == null) {
+            return resultados;
+        }
 
-            if (coincide(
-                    coleccion.get(i).getGenero().getNombre(),
-                    genero)) {
+        for (Cancion cancion : canciones) {
 
-                resultado.add(coleccion.get(i));
+            if (cancion.getGenero()
+                    .getNombre()
+                    .toLowerCase()
+                    .contains(genero.toLowerCase())) {
+
+                resultados.add(cancion);
             }
         }
 
-        return resultado;
+        return resultados;
     }
 
+    // Busca canciones por artista
+    @Override
     public ArrayList<Cancion> buscarPorArtista(String artista) {
 
-        ArrayList<Cancion> resultado = new ArrayList<>();
+        ArrayList<Cancion> resultados = new ArrayList<>();
 
-        for (int i = 0; i < coleccion.size(); i++) {
+        if (artista == null) {
+            return resultados;
+        }
 
-            if (coincide(
-                    coleccion.get(i).getArtista().getNombre(),
-                    artista)) {
+        for (Cancion cancion : canciones) {
 
-                resultado.add(coleccion.get(i));
+            if (cancion.getArtista()
+                    .getNombre()
+                    .toLowerCase()
+                    .contains(artista.toLowerCase())) {
+
+                resultados.add(cancion);
             }
         }
 
-        return resultado;
+        return resultados;
     }
 
-    public double getCalificacionPromedio() {
+    // Muestra las canciones de la colección
+    public void mostrarColeccion() {
 
-        if (coleccion.isEmpty()) {
-            return 0.0;
-        }
-
-        double suma = 0;
-
-        for (int i = 0; i < coleccion.size(); i++) {
-            suma += coleccion.get(i).getCalificacion();
-        }
-
-        return suma / coleccion.size();
-    }
-
-    private double valorDe(Cancion c) {
-        return c.getCalificacion();
-    }
-
-    public ArrayList<Cancion> getTop3MejoresCalificaciones() {
-
-        if (coleccion.isEmpty()) {
+        if (canciones.isEmpty()) {
 
             System.out.println(
                     "La colección está vacía."
             );
 
-            return new ArrayList<>();
+            return;
         }
 
-        ArrayList<Cancion> cs =
-                new ArrayList<>(coleccion);
-
-        cs.sort(
-                (a, b) ->
-                        Double.compare(
-                                valorDe(b),
-                                valorDe(a)
-                        )
-        );
-
-        while (cs.size() > 3) {
-            cs.remove(cs.size() - 1);
+        for (Cancion cancion : canciones) {
+            System.out.println(cancion);
         }
-
-        return cs;
     }
 
-    public ArrayList<Cancion> getTop3MasCompradas() {
-
-        // Se completará cuando Cancion tenga contador
-        // de compras.
-
-        return new ArrayList<>();
-    }
-
-    public ArrayList<Cancion> getTop3MasIncluidas() {
-
-        // Se completará cuando Cancion tenga contador
-        // de inclusiones en listas.
-
-        return new ArrayList<>();
-    }
-
-    public void actualizarTop3() {
-
-        cacheTops.clear();
-
-        cacheTops.add(
-                getTop3MejoresCalificaciones()
-        );
-
-        cacheTops.add(
-                getTop3MasCompradas()
-        );
-
-        cacheTops.add(
-                getTop3MasIncluidas()
-        );
-    }
-
+    // Muestra la información principal de la colección
     @Override
     public String toString() {
 
-        return "La colección contiene "
-                + coleccion.size()
-                + " canciones y tiene una calificación promedio de "
-                + getCalificacionPromedio()
-                + ".";
+        return "Colección con "
+                + canciones.size()
+                + " canciones.";
     }
 }

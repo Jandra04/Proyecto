@@ -1,114 +1,123 @@
+package cr.ac.ucenfotec.bl.entidades;
+import cr.ac.ucenfotec.bl.excepciones.SaldoInsuficienteException;
 import java.util.ArrayList;
 
 public class HistorialMovimientos {
 
+    // Atributos
     private ArrayList<Recarga> recargas;
     private ArrayList<Compra> compras;
     private double saldo;
 
+    // Constructor
     public HistorialMovimientos() {
         this.recargas = new ArrayList<>();
         this.compras = new ArrayList<>();
         this.saldo = 0.0;
     }
 
+    // Getters
     public ArrayList<Recarga> getRecargas() {
         return recargas;
-    }
-
-    public void setRecargas(ArrayList<Recarga> recargas) {
-        this.recargas = recargas;
     }
 
     public ArrayList<Compra> getCompras() {
         return compras;
     }
 
-    public void setCompras(ArrayList<Compra> compras) {
-        this.compras = compras;
-    }
-
     public double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
-
+    // Registra una recarga
     public void registrarRecarga(double monto) {
 
         if (monto <= 0) {
-            System.out.println("El monto de la recarga debe ser mayor a cero.");
-            return;
+            throw new IllegalArgumentException(
+                    "El monto de la recarga debe ser mayor que cero."
+            );
         }
 
         Recarga recarga = new Recarga(monto);
-        recargas.add(recarga);
 
-        saldo = saldo + monto;
+        recargas.add(recarga);
+        saldo += monto;
     }
 
-    public void registrarCompra(String nombreUsuario, Cancion cancion, double monto) {
-
-        if (cancion == null || monto <= 0) {
-            System.out.println("No se pudo registrar la compra.");
-            return;
+    // Registra una compra
+    public void registrarCompra(Usuario usuario,
+                                Cancion cancion,
+                                double monto)
+            throws SaldoInsuficienteException {
+        if (saldo < monto) {
+            throw new SaldoInsuficienteException(
+                    "El usuario no tiene saldo suficiente."
+            );
         }
 
-        Compra compra = new Compra(
-                nombreUsuario,
-                cancion,
-                monto
-        );
+        if (monto <= 0) {
+            throw new IllegalArgumentException(
+                    "El monto de la compra debe ser mayor que cero."
+            );
+        }
+
+        if (saldo < monto) {
+            throw new IllegalStateException(
+                    "El usuario no tiene saldo suficiente."
+            );
+        }
+
+        Compra compra =
+                new Compra(
+                        usuario,
+                        cancion,
+                        monto
+                );
 
         compras.add(compra);
-
-        saldo = saldo - monto;
+        saldo -= monto;
     }
 
-    public void recalcularSaldo() {
-
-        saldo = 0.0;
-
-        for (int i = 0; i < recargas.size(); i++) {
-            saldo = saldo + recargas.get(i).getMonto();
-        }
-
-        for (int i = 0; i < compras.size(); i++) {
-            saldo = saldo - compras.get(i).getPrecio();
-        }
-    }
-
+    // Muestra las recargas y compras realizadas
     public void mostrarHistorial() {
 
-        if (recargas.isEmpty() && compras.isEmpty()) {
-            System.out.println("No hay movimientos registrados.");
-            return;
+        System.out.println("Recargas:");
+
+        if (recargas.isEmpty()) {
+            System.out.println("No hay recargas registradas.");
+        } else {
+
+            for (Recarga recarga : recargas) {
+                System.out.println(recarga);
+            }
         }
 
-        System.out.println("===== RECARGAS =====");
+        System.out.println("Compras:");
 
-        for (Recarga recarga : recargas) {
-            System.out.println(recarga);
+        if (compras.isEmpty()) {
+            System.out.println("No hay compras registradas.");
+        } else {
+
+            for (Compra compra : compras) {
+                System.out.println(compra);
+            }
         }
 
-        System.out.println("\n===== COMPRAS =====");
-
-        for (Compra compra : compras) {
-            System.out.println(compra);
-        }
-
-        System.out.println("\nSaldo actual: $" + saldo);
+        System.out.println(
+                "Saldo actual: $"
+                        + String.format("%.2f", saldo)
+        );
     }
 
+    // Muestra la información principal del historial
     @Override
     public String toString() {
-        return "El historial contiene "
+
+        return "Historial con "
                 + recargas.size()
                 + " recargas y "
                 + compras.size()
-                + " compras. El saldo actual es de $"
-                + saldo + ".";
+                + " compras. Saldo actual: $"
+                + String.format("%.2f", saldo);
     }
 }

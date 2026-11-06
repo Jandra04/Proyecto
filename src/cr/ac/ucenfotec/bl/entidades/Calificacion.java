@@ -1,50 +1,24 @@
+package cr.ac.ucenfotec.bl.entidades;
+
 public class Calificacion {
 
+    // atributos
     private double suma;
     private int cantidad;
 
+    // Constructor
     public Calificacion() {
         this.suma = 0.0;
         this.cantidad = 0;
-
     }
 
+    // Getters
     public double getSuma() {
         return suma;
     }
 
-    public void setSuma(double suma) {
-        this.suma = suma;
-    }
-
     public int getCantidad() {
         return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public boolean agregar(double valor) {
-
-        double redondeado =
-                Math.round(valor * 10) / 10.0;
-
-        if (valor < 0.0
-                || valor > 5.0
-                || redondeado != valor) {
-
-            System.out.println(
-                    "Valor no válido: debe estar entre 0.0 y 5.0 con un máximo de un decimal."
-            );
-
-            return false;
-        }
-
-        suma = suma + valor;
-        cantidad++;
-
-        return true;
     }
 
     public double getPromedio() {
@@ -56,12 +30,41 @@ public class Calificacion {
         return suma / cantidad;
     }
 
-    public boolean hayCalificacion() {
+    // Agrega una calificación válida
+    public boolean agregar(double valor) {
+
+        double redondeado =
+                Math.round(valor * 10) / 10.0;
+
+        if (valor < 0.0
+                || valor > 5.0
+                || redondeado != valor) {
+
+            System.out.println(
+                    "La calificación debe estar entre 0.0 y 5.0 y tener máximo un decimal."
+            );
+
+            return false;
+        }
+
+        suma += valor;
+        cantidad++;
+
+        return true;
+    }
+
+    // Verifica si existen calificaciones
+    public boolean hayCalificaciones() {
         return cantidad > 0;
     }
 
+    // Muestra el promedio y la cantidad de calificaciones
     @Override
     public String toString() {
+
+        if (!hayCalificaciones()) {
+            return "La canción todavía no tiene calificaciones.";
+        }
 
         return "La canción tiene una calificación promedio de "
                 + String.format("%.1f", getPromedio())
