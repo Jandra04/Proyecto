@@ -1,125 +1,171 @@
+package cr.ac.ucenfotec.bl.entidades;
+
 import java.time.LocalDate;
 
 public class Cancion {
 
-    private String Nombre;
+    // atributos
+    private String nombre;
     private LocalDate fechaLanzamiento;
-    private double calificacion;
     private double precio;
+    private String rutaAudio;
+
+    // Datos relacionados con la canción
     private Genero genero;
     private Artista artista;
     private Compositor compositor;
     private Album album;
     private Calificacion registroCalificaciones;
 
-    public Cancion(String Nombre, LocalDate fechaLanzamiento,
-                   double calificacion, double precio,
-                   Genero genero, Artista artista,
-                   Compositor compositor, Album album){
+    // Datos para los Top 3
+    private int vecesComprada;
+    private int vecesAgregadaAListas;
 
-    this.Nombre = Nombre;
-    this.fechaLanzamiento = fechaLanzamiento;
-    this.calificacion = calificacion;
-    this.precio = precio;
-    this.genero = genero;
-    this.artista = artista;
-    this.compositor = compositor;
-    this.album = album;
-    this.registroCalificaciones = new Calificacion();
+    // Constructor
+    public Cancion(String nombre,
+                   LocalDate fechaLanzamiento,
+                   double precio,
+                   String rutaAudio,
+                   Genero genero,
+                   Artista artista,
+                   Compositor compositor,
+                   Album album) {
+
+        this.nombre = nombre;
+        this.fechaLanzamiento = fechaLanzamiento;
+        this.precio = precio;
+        this.rutaAudio = rutaAudio;
+        this.genero = genero;
+        this.artista = artista;
+        this.compositor = compositor;
+        this.album = album;
+        this.registroCalificaciones = new Calificacion();
+        this.vecesComprada = 0;
+        this.vecesAgregadaAListas = 0;
     }
 
-
-    public String getNombre(){
-        return Nombre;
+    // Getters
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombre(String nombre){
-        this.Nombre = nombre;
-    }
-
-    public LocalDate getFechaLanzamiento(){
+    public LocalDate getFechaLanzamiento() {
         return fechaLanzamiento;
     }
 
-    public void setFechaLanzamiento(LocalDate fechaLanzamiento){
-        this.fechaLanzamiento = fechaLanzamiento;
-    }
-
-    public double getCalificacion(){
-        return calificacion;
-    }
-
-    public void setCalificacion(double calificacion){
-        this.calificacion = calificacion;
-    }
-
-    public double getPrecio(){
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio){
-        this.precio = precio;
+    public String getRutaAudio() {
+        return rutaAudio;
     }
 
-    public Genero getGenero(){
+    public Genero getGenero() {
         return genero;
     }
 
-    public void setGenero(Genero genero){
-        this.genero = genero;
-    }
-
-    public Artista getArtista(){
+    public Artista getArtista() {
         return artista;
     }
 
-    public void setArtista(Artista artista){
-        this.artista = artista;
-    }
-
-    public Compositor getCompositor(){
+    public Compositor getCompositor() {
         return compositor;
     }
 
-    public void setCompositor(Compositor compositor){
-        this.compositor = compositor;
-    }
-
-    public Album getAlbum(){
+    public Album getAlbum() {
         return album;
     }
 
-    public void setAlbum(Album album){
-        this.album = album;
-    }
     public Calificacion getRegistroCalificaciones() {
         return registroCalificaciones;
     }
 
-    public void setRegistroCalificaciones(Calificacion registroCalificaciones) {
-        this.registroCalificaciones = registroCalificaciones;
+    public double getCalificacion() {
+        return registroCalificaciones.getPromedio();
     }
+
+    public int getVecesComprada() {
+        return vecesComprada;
+    }
+
+    public int getVecesAgregadaAListas() {
+        return vecesAgregadaAListas;
+    }
+
+    // Setters
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setFechaLanzamiento(LocalDate fechaLanzamiento) {
+        this.fechaLanzamiento = fechaLanzamiento;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public void setRutaAudio(String rutaAudio) {
+        this.rutaAudio = rutaAudio;
+    }
+
+    public void setGenero(Genero genero) {
+        this.genero = genero;
+    }
+
+    public void setArtista(Artista artista) {
+        this.artista = artista;
+    }
+
+    public void setCompositor(Compositor compositor) {
+        this.compositor = compositor;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+
+    // Agrega una calificación
     public boolean calificar(double valor) {
+        return registroCalificaciones.agregar(valor);
+    }
 
-        boolean agregado = registroCalificaciones.agregar(valor);
+    // Registra una compra de la canción
+    public void registrarCompra() {
+        vecesComprada++;
+    }
 
-        if (agregado) {
-            calificacion = registroCalificaciones.getPromedio();
+    // Registra que la canción fue agregada a una lista
+    public void registrarAgregadaALista() {
+        vecesAgregadaAListas++;
+    }
+
+    // Registra que la canción fue eliminada de una lista
+    public void registrarEliminadaDeLista() {
+
+        if (vecesAgregadaAListas > 0) {
+            vecesAgregadaAListas--;
         }
-
-        return agregado;
     }
 
+    // Muestra la información de la canción
     @Override
-    public String toString(){
-        return "Cancion"
-                + "\nNombre: " + Nombre +
-                "\nFecha de lanzamiento: " + fechaLanzamiento +
-                "\nCalificacion: " + calificacion +
-                "\nPrecio: $ " + precio +
-                "\nGenero: " + genero.getNombre() +
-                "\nArtista: " + artista.getNombre() +
-                "\nCompositor: " + compositor.getNombre() +
-                "\nAlbum: " + (album != null ? album.getNombre() : "Sencillo");
+    public String toString() {
+
+        return "Canción"
+                + "\nNombre: " + nombre
+                + "\nFecha de lanzamiento: " + fechaLanzamiento
+                + "\nCalificación: "
+                + String.format("%.1f", getCalificacion())
+                + "\nPrecio: $"
+                + String.format("%.2f", precio)
+                + "\nGénero: " + genero.getNombre()
+                + "\ncr.ac.ucenfotec.bl.entidades.Artista: " + artista.getNombre()
+                + "\ncr.ac.ucenfotec.bl.entidades.Compositor: " + compositor.getNombre()
+                + "\nÁlbum: "
+                + (album != null
+                ? album.getNombre()
+                : "Sencillo");
     }
-    }
+}

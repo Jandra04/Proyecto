@@ -1,22 +1,28 @@
+package cr.ac.ucenfotec.bl.entidades;
+
 public class Compositor {
 
+    // Atributos
     private String nombre;
 
+    // Constructor
     public Compositor(String nombre) {
         this.nombre = nombre;
     }
 
-    public String getNombre(){
+    // Getter
+    public String getNombre() {
         return nombre;
     }
 
-    public void setnombre(String nombre){
+    // Setter
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    // Muestra la información del compositor
     @Override
     public String toString() {
-        return "Compositor" +
-                "\nNombre: " + nombre;
+        return "Compositor: " + nombre;
     }
 }

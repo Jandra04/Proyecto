@@ -1,22 +1,28 @@
+package cr.ac.ucenfotec.bl.entidades;
+
 public class Artista {
 
+    // atributos
     private String nombre;
 
-    public Artista(String nombre){
+    // Constructor
+    public Artista(String nombre) {
         this.nombre = nombre;
     }
 
-    public String getNombre(){
+    // Getter
+    public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre){
+    // Setter
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    // Muestra la información del artista
     @Override
-    public String toString(){
-        return "Artista" +
-                "\nNombre: " + nombre;
+    public String toString() {
+        return "Artista: " + nombre;
     }
 }
